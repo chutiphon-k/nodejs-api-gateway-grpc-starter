@@ -12,7 +12,6 @@ export class BooksController {
 
   @Get()
   async getBooks(@Query() query: GetBooksDto): Promise<Book[]> {
-    const books: Book[] = await this.booksService.getBooks({ filter: query });
-    return books;
+    return this.booksService.getBooks({ filter: query });
   }
 }
