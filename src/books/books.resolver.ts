@@ -1,16 +1,24 @@
-import { Resolver, Query } from 'type-graphql';
+import { Resolver, Query, Args } from '@nestjs/graphql';
+// import { Arg, ResolverInterface } from 'type-graphql';
 
-import { Book } from './types';
+import { Book } from './schemas/types';
+import { BooksFilter } from './schemas/filters';
 import { BooksService } from './books.service';
 
-@Resolver(Book)
+@Resolver(of => Book)
 export class BooksResolver {
   constructor(
     private readonly booksService: BooksService,
   ) {}
 
   @Query(returns => [Book])
-  books(): Promise<Book[]> {
-    return this.booksService.getBooks({});
+  async books(
+    @Args({ name: 'owner', type: () => Boolean, nullable: true }) owner?: boolean,
+    @Args({ name: 'filter', type: () => BooksFilter, nullable: true }) filter?: BooksFilter,
+  ): Promise<Book[]> {
+    console.log('====================================');
+    console.log(owner, filter);
+    console.log('====================================');
+    return this.booksService.getBooks({ owner, filter });
   }
 }

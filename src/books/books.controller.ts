@@ -1,6 +1,6 @@
 import { Controller, Get, Query } from '@nestjs/common';
 
-import { Book } from './types';
+import { Book } from './schemas/types';
 import { GetBooksDto } from './dtos';
 import { BooksService } from './books.service';
 

@@ -6,15 +6,15 @@ export class Book {
   // tslint:disable-next-line: variable-name
   _id: string;
 
-  @Field()
+  @Field({ nullable: true })
   title?: string;
 
-  @Field()
+  @Field({ nullable: true })
   description?: string;
 
   @Field(type => ID)
-  userId?: string;
+  userId: string;
 
-  @Field()
+  @Field({ nullable: true })
   coverImage?: string;
 }

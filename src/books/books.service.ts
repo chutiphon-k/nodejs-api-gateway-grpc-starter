@@ -1,7 +1,7 @@
 import { Injectable, HttpService } from '@nestjs/common';
 import { AxiosResponse } from 'axios';
 
-import { Book } from './types';
+import { Book } from './schemas/types';
 import { getBooks } from './services';
 
 @Injectable()

@@ -7,6 +7,6 @@ import { BooksResolver } from './books.resolver';
 @Module({
   imports: [HttpModule],
   controllers: [BooksController],
-  providers: [BooksService, BooksResolver],
+  providers: [BooksResolver, BooksService],
 })
 export class BooksModule {}

@@ -1,16 +1,22 @@
-import { Module } from '@nestjs/common';
+import { Module, ValidationPipe } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
+import { APP_PIPE } from '@nestjs/core';
 
 import { BooksModule } from './books/books.module';
-import { GraphqlConfigService } from './graphql.config.service';
 
 @Module({
   imports: [
     BooksModule,
-    GraphQLModule.forRootAsync({
-      useClass: GraphqlConfigService,
+    GraphQLModule.forRoot({
+      autoSchemaFile: true,
     }),
   ],
+  providers: [
+    {
+      provide: APP_PIPE,
+      useClass: ValidationPipe,
+    },
+  ]
 })
 
 export class AppModule {}
