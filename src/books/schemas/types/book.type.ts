@@ -17,4 +17,7 @@ export class Book {
 
   @Field({ nullable: true })
   coverImage?: string;
+
+  @Field(type => JSON, { nullable: true })
+  contentRawState?: object;
 }

@@ -1,4 +1,5 @@
 import { InputType, Field, ID } from 'type-graphql';
+import { Max } from 'class-validator';
 
 import { Book } from '../types';
 import { BooksSortType } from '../enums';
@@ -18,6 +19,7 @@ export class BooksFilter implements Partial<Book> {
   beforeCursor?: string;
 
   @Field({ nullable: true })
+  @Max(100)
   limit?: number;
 
   @Field({ nullable: true })

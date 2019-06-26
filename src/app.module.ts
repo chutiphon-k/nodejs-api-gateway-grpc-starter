@@ -3,6 +3,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { APP_PIPE } from '@nestjs/core';
 
 import { BooksModule } from './books/books.module';
+import { JsonScalar } from './commons/scalars/json.scalar';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { BooksModule } from './books/books.module';
     }),
   ],
   providers: [
+    JsonScalar,
     {
       provide: APP_PIPE,
       useClass: ValidationPipe,
