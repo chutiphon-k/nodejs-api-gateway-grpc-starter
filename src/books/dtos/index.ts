@@ -1,1 +1,1 @@
-export * from './getBooksDto.dto';
+export * from './getBooks.dto';

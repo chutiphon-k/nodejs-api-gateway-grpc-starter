@@ -1,5 +1,7 @@
 import { ObjectType, Field, ID } from 'type-graphql';
 
+import { JsonScalar } from '../../../commons/scalars';
+
 @ObjectType()
 export class Book {
   @Field(type => ID)
@@ -18,6 +20,9 @@ export class Book {
   @Field({ nullable: true })
   coverImage?: string;
 
-  @Field(type => JSON, { nullable: true })
+  @Field(type => JsonScalar, { nullable: true })
   contentRawState?: object;
+
+  @Field({ nullable: true })
+  viewsCount?: number;
 }

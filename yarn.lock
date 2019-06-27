@@ -260,6 +260,11 @@
   resolved "https://registry.yarnpkg.com/@types/json5/-/json5-0.0.29.tgz#ee28707ae94e11d2b827bcbe5270bcea7f3e71ee"
   integrity sha1-7ihweulOEdK4J7y+UnC86n8+ce4=
 
+"@types/lodash@^4.14.135":
+  version "4.14.135"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.135.tgz#d2607c35dd68f70c2b35ba020c667493dedd8447"
+  integrity sha512-Ed+tSZ9qM1oYpi5kzdsBuOzcAIn1wDW+e8TFJ50IMJMlSopGdJgKAbhHzN6h1E1OfjlGOr2JepzEWtg9NIfoNg==
+
 "@types/long@^4.0.0":
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@types/long/-/long-4.0.0.tgz#719551d2352d301ac8b81db732acb6bdc28dbdef"
@@ -2348,6 +2353,11 @@ graceful-fs@^4.1.11, graceful-fs@^4.1.2, graceful-fs@^4.1.6:
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.1.15.tgz#ffb703e1066e8a0eeaa4c8b80ba9253eeefbfb00"
   integrity sha512-6uHUhOPEBgQ24HM+r6b/QwWfZq+yiFcipKFrOFiBEnWdy5sdzYoi+pJeQaPI5qOLRFqWmAXUPQNsielzdLoecA==
 
+graphql-bigint@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/graphql-bigint/-/graphql-bigint-1.0.0.tgz#b2909be9c9970a9a7697273c27d0ea47a146a19c"
+  integrity sha512-eLDf9GinU0ioui1ipXCl7pMFa3Am8pxciS0D0LR68SXfY7EzLk5P58LKyk+7CgLD5f66kiFGa5OIqt6iRLE2cQ==
+
 graphql-extensions@0.7.2:
   version "0.7.2"
   resolved "https://registry.yarnpkg.com/graphql-extensions/-/graphql-extensions-0.7.2.tgz#8711543f835661eaf24b48d6ac2aad44dbbd5506"
@@ -2361,6 +2371,11 @@ graphql-extensions@0.7.3:
   integrity sha512-D+FZM0t5gFntJUizeRCurZuUqsyVP13CRejRX+cDJivyGkE6OMWYkCWlzHcbye79q+hYN1m6a3NhlrJRaD9D0w==
   dependencies:
     "@apollographql/apollo-tools" "^0.3.6"
+
+graphql-input-number@^0.0.10:
+  version "0.0.10"
+  resolved "https://registry.yarnpkg.com/graphql-input-number/-/graphql-input-number-0.0.10.tgz#509b1c1fb5baeef8ab516a7c82c40dcebb8f8358"
+  integrity sha1-UJscH7W67virUWp8gsQNzruPg1g=
 
 graphql-query-complexity@^0.2.3:
   version "0.2.3"

@@ -1,9 +1,10 @@
 import { Module, ValidationPipe } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { APP_PIPE } from '@nestjs/core';
+import { values } from 'lodash';
 
 import { BooksModule } from './books/books.module';
-import { JsonScalar } from './commons/scalars/json.scalar';
+import * as scalars from './commons/scalars';
 
 @Module({
   imports: [
@@ -13,12 +14,12 @@ import { JsonScalar } from './commons/scalars/json.scalar';
     }),
   ],
   providers: [
-    JsonScalar,
+    ...values(scalars),
     {
       provide: APP_PIPE,
       useClass: ValidationPipe,
     },
-  ]
+  ],
 })
 
 export class AppModule {}
