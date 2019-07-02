@@ -4,10 +4,6 @@ import { Book } from '../types';
 import { BooksSortType } from '../enums';
 import { OneToOneHundredIntScalar } from '../../../commons/scalars';
 
-console.log('====================================');
-console.log(BooksSortType);
-console.log('====================================');
-
 @InputType()
 export class BooksFilter implements Partial<Book> {
   @Field(type => ID, { nullable: true })

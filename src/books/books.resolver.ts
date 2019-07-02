@@ -5,7 +5,7 @@ import { Book } from './schemas/types';
 import { BooksFilter } from './schemas/filters';
 import { BooksService } from './books.service';
 
-@Resolver(of => Book)
+@Resolver(Book)
 export class BooksResolver {
   constructor(
     private readonly booksService: BooksService,
