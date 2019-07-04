@@ -1,5 +1,4 @@
 import { Resolver, Query, Args } from '@nestjs/graphql';
-// import { Arg, ResolverInterface } from 'type-graphql';
 
 import { Book } from './schemas/types';
 import { BooksFilter } from './schemas/filters';
