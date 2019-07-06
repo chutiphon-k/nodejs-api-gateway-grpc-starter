@@ -1,6 +1,6 @@
 import { CustomScalar, Scalar } from '@nestjs/graphql';
 import { GraphQLJSON } from 'graphql-type-json';
-import { GraphQLScalarType } from 'graphql';
+import { GraphQLScalarType, ValueNode } from 'graphql';
 
 @Scalar('Json')
 export class JsonScalar implements CustomScalar<object, object> {
@@ -20,7 +20,7 @@ export class JsonScalar implements CustomScalar<object, object> {
     return this.graphQLScalarType.serialize(value);
   }
 
-  parseLiteral(ast: any): object {
+  parseLiteral(ast: ValueNode): object {
     return this.graphQLScalarType.parseLiteral(ast, null);
   }
 }

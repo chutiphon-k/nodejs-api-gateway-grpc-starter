@@ -1,6 +1,6 @@
 import { CustomScalar, Scalar } from '@nestjs/graphql';
 import * as GraphQlBigInt from 'graphql-bigint';
-import { GraphQLScalarType } from 'graphql';
+import { GraphQLScalarType, ValueNode} from 'graphql';
 
 @Scalar('BigInt')
 export class BigIntScalar implements CustomScalar<number, number> {
@@ -20,7 +20,7 @@ export class BigIntScalar implements CustomScalar<number, number> {
     return this.graphQLScalarType.serialize(value);
   }
 
-  parseLiteral(ast: any): number {
+  parseLiteral(ast: ValueNode): number {
     return this.graphQLScalarType.parseLiteral(ast, null);
   }
 }

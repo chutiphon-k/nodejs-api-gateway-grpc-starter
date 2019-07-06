@@ -7,7 +7,7 @@ import { AuthsService } from '../auths/auths.service';
 @Controller('users')
 export class UsersController {
   constructor(
-    private readonly authService: AuthsService
+    private readonly authService: AuthsService,
   ) {}
 
   @Post('login')

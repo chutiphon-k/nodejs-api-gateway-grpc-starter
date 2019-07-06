@@ -1,1 +1,1 @@
-export * from './jwtPayload.interface';
+export * from './tokenPayload.interface';

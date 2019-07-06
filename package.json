@@ -20,12 +20,13 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
-    "@nestjs/common": "^6.0.0",
-    "@nestjs/core": "^6.0.0",
+    "@nestjs/common": "^6.4.1",
+    "@nestjs/core": "^6.4.1",
     "@nestjs/graphql": "^6.2.4",
     "@nestjs/jwt": "^6.1.1",
+    "@nestjs/microservices": "^6.4.1",
     "@nestjs/passport": "^6.1.0",
-    "@nestjs/platform-express": "^6.0.0",
+    "@nestjs/platform-express": "^6.4.1",
     "apollo-server-express": "^2.6.4",
     "axios": "^0.19.0",
     "class-transformer": "^0.2.3",
@@ -37,6 +38,8 @@
     "graphql-type-json": "^0.3.0",
     "helmet": "^3.18.0",
     "lodash": "^4.17.11",
+    "nestjs-config": "^1.4.2",
+    "nestjs-redis": "^1.2.0",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "reflect-metadata": "^0.1.12",
@@ -45,10 +48,11 @@
     "type-graphql": "^0.17.4"
   },
   "devDependencies": {
-    "@nestjs/testing": "^6.0.0",
+    "@nestjs/testing": "^6.4.1",
     "@types/express": "^4.16.0",
     "@types/graphql-type-json": "^0.3.0",
     "@types/helmet": "^0.0.43",
+    "@types/ioredis": "^4.0.12",
     "@types/jest": "^23.3.13",
     "@types/lodash": "^4.14.135",
     "@types/node": "^10.12.18",

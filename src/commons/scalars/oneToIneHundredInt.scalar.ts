@@ -1,6 +1,6 @@
 import { CustomScalar, Scalar } from '@nestjs/graphql';
 import { GraphQLInputInt } from 'graphql-input-number';
-import { GraphQLScalarType } from 'graphql';
+import { GraphQLScalarType, ValueNode } from 'graphql';
 
 const GraphqlOneToOneHundredInt: GraphQLScalarType = GraphQLInputInt({
   name: 'OneToOneHundredInt',
@@ -26,7 +26,7 @@ export class OneToOneHundredIntScalar implements CustomScalar<number, number> {
     return GraphqlOneToOneHundredInt.serialize(value);
   }
 
-  parseLiteral(ast: any): number {
+  parseLiteral(ast: ValueNode): number {
     return GraphqlOneToOneHundredInt.parseLiteral(ast, null);
   }
 }
