@@ -1,22 +1,19 @@
-import { ExceptionFilter, Catch, ArgumentsHost, HttpException } from '@nestjs/common';
-import { Request, Response } from 'express';
+import { Catch, ArgumentsHost, HttpException } from '@nestjs/common';
+import { GqlExceptionFilter } from '@nestjs/graphql';
+import { isFunction } from 'lodash';
+import { Response } from 'express';
 
 @Catch(HttpException)
-export class HttpExceptionFilter implements ExceptionFilter {
+export class HttpExceptionFilter implements GqlExceptionFilter {
   catch(exception: HttpException, host: ArgumentsHost) {
-    const ctx = host.switchToHttp();
-    const response = ctx.getResponse<Response>();
-    const request = ctx.getRequest<Request>();
-    const status = exception.getStatus();
-    console.log('====================================');
-    console.log(exception);
-    console.log('====================================');
-    response
-      .status(status)
-      .json({
-        statusCode: status,
-        timestamp: new Date().toISOString(),
-        path: request.url,
-      });
+    const res = host.switchToHttp().getResponse<Response>();
+
+    // for graphql
+    if (!isFunction(res.json)) { return exception; }
+
+    // for rest api
+    res
+      .status(exception.getStatus())
+      .json(exception.getResponse());
   }
 }

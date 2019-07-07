@@ -16,7 +16,6 @@ async function bootstrap() {
   //     url: 'redis://localhost:6379',
   //   },
   // });
-  // app.useGlobalFilters(new HttpExceptionFilter());
   const PORT = ConfigService.get('app.port');
   await app.listen(PORT);
   console.log(`server listening on ${PORT}`);

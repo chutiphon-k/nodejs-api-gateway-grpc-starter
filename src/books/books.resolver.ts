@@ -12,7 +12,7 @@ export class BooksResolver {
     private readonly booksService: BooksService,
   ) {}
 
-  @Query(returns => [Book])
+  @Query(() => [Book])
   @UseGuards(AuthGuard)
   async books(
     @Args({ name: 'owner', type: () => Boolean, nullable: true }) owner?: boolean,

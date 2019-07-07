@@ -1,6 +1,6 @@
 import { Module, ValidationPipe } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
-import { APP_PIPE } from '@nestjs/core';
+import { APP_PIPE, APP_FILTER } from '@nestjs/core';
 import { values } from 'lodash';
 import { RedisModule, RedisModuleOptions } from 'nestjs-redis';
 import { ConfigModule } from 'nestjs-config';
@@ -9,6 +9,7 @@ import { BooksModule } from './books/books.module';
 import { UsersModule } from './users/users.module';
 import { AuthsModule } from './auths/auths.module';
 import * as scalars from './commons/scalars';
+import { HttpExceptionFilter } from './commons/filters';
 
 const options: RedisModuleOptions[] = [{
   name: 'token',
@@ -41,6 +42,10 @@ const options: RedisModuleOptions[] = [{
     {
       provide: APP_PIPE,
       useClass: ValidationPipe,
+    },
+    {
+      provide: APP_FILTER,
+      useClass: HttpExceptionFilter,
     },
   ],
 })

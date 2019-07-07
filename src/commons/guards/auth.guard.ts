@@ -9,9 +9,6 @@ import { Request } from 'express';
 @Injectable()
 export class AuthGuard extends PassportAuthGuard() {
   getRequest(context: ExecutionContext): Request {
-    const req: Request = context.switchToHttp().getRequest();
-    if (req) { return req; }
-    const graphqlContext: GraphQLExecutionContext = GqlExecutionContext.create(context);
-    return graphqlContext.getContext().req;
+    return context.switchToHttp().getRequest() || GqlExecutionContext.create(context).getContext().req;
   }
 }

@@ -19,7 +19,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
     });
   }
 
-  async validate(req: Request, payload: ITokenPayload) {
+  async validate(req: Request, payload: ITokenPayload): Promise<ITokenPayload> {
     const { headers: { authorization } } = req as { headers: IncomingHttpHeaders };
 
     const token: string = authorization.split(' ').filter(v => v !== '')[1];
