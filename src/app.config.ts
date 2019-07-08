@@ -18,4 +18,7 @@ export default {
       lazyConnect: true,
     },
   ],
+  sentry: {
+    dsn: process.env.SENTRY_DSN,
+  },
 } as IAppConfig;

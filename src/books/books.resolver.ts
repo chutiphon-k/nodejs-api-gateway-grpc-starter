@@ -13,7 +13,7 @@ export class BooksResolver {
   ) {}
 
   @Query(() => [Book])
-  // @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard)
   async books(@Args() args: BooksArgs): Promise<Book[]> {
     return this.booksService.getBooks(args);
   }

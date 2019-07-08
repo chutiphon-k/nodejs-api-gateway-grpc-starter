@@ -1,9 +1,11 @@
-import { Module, ValidationPipe } from '@nestjs/common';
+import { Module, ValidationPipe, OnModuleInit } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
-import { APP_PIPE, APP_FILTER } from '@nestjs/core';
+import { APP_PIPE, APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { values } from 'lodash';
 import { RedisModule } from 'nestjs-redis';
 import { ConfigModule, ConfigService } from 'nestjs-config';
+import { RavenModule, RavenInterceptor } from 'nest-raven';
+import * as Sentry from '@sentry/node';
 
 import { BooksModule } from './books/books.module';
 import { UsersModule } from './users/users.module';
@@ -16,6 +18,7 @@ import * as scalars from './commons/scalars';
     BooksModule,
     UsersModule,
     AuthsModule,
+    RavenModule,
     RedisModule.forRootAsync({
       useFactory: (configService: ConfigService) => configService.get('app.redis'),
       inject: [ConfigService],
@@ -38,7 +41,20 @@ import * as scalars from './commons/scalars';
       provide: APP_FILTER,
       useClass: HttpExceptionFilter,
     },
+    {
+      provide: APP_INTERCEPTOR,
+      useValue: new RavenInterceptor(),
+    },
   ],
 })
 
-export class AppModule {}
+export class AppModule implements OnModuleInit {
+  constructor (
+    private readonly configService: ConfigService,
+  ) {}
+  onModuleInit() {
+    Sentry.init({
+      dsn: this.configService.get('app.sentry.dsn'),
+    });
+  }
+}
