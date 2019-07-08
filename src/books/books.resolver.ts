@@ -1,10 +1,10 @@
 import { Resolver, Query, Args } from '@nestjs/graphql';
+import { UseGuards } from '@nestjs/common';
 
 import { Book } from './schemas/types';
-import { BooksFilter } from './schemas/filters';
 import { BooksService } from './books.service';
-import { UseGuards } from '@nestjs/common';
 import { AuthGuard } from '../commons/guards';
+import { BooksArgs } from './schemas/args';
 
 @Resolver(Book)
 export class BooksResolver {
@@ -13,14 +13,8 @@ export class BooksResolver {
   ) {}
 
   @Query(() => [Book])
-  @UseGuards(AuthGuard)
-  async books(
-    @Args({ name: 'owner', type: () => Boolean, nullable: true }) owner?: boolean,
-    @Args({ name: 'filter', type: () => BooksFilter, nullable: true }) filter?: BooksFilter,
-  ): Promise<Book[]> {
-    console.log('====================================');
-    console.log(owner, filter);
-    console.log('====================================');
-    return this.booksService.getBooks({ owner, filter });
+  // @UseGuards(AuthGuard)
+  async books(@Args() args: BooksArgs): Promise<Book[]> {
+    return this.booksService.getBooks(args);
   }
 }

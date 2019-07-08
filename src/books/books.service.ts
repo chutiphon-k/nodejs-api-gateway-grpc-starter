@@ -1,15 +1,17 @@
-import { Injectable, HttpService } from '@nestjs/common';
+import { Injectable, HttpService, Inject } from '@nestjs/common';
+import { pick } from 'lodash';
 
 import { Book } from './schemas/types';
 import { getBooks } from './services';
+import { BooksArgs } from './schemas/args';
 
 @Injectable()
 export class BooksService {
   constructor(
-    private readonly client: HttpService,
+    private readonly bookRepository: HttpService,
   ) {}
 
-  async getBooks(args: any): Promise<Book[]> {
-    return getBooks.call(this, args);
+  async getBooks(args: BooksArgs): Promise<Book[]> {
+    return getBooks.call({ bookRepository: this.bookRepository }, args);
   }
 }
