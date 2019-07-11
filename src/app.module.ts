@@ -41,10 +41,10 @@ import * as scalars from './commons/scalars';
       provide: APP_FILTER,
       useClass: HttpExceptionFilter,
     },
-    {
-      provide: APP_INTERCEPTOR,
-      useValue: new RavenInterceptor(),
-    },
+    // {
+    //   provide: APP_INTERCEPTOR,
+    //   useValue: new RavenInterceptor(),
+    // },
   ],
 })
 
