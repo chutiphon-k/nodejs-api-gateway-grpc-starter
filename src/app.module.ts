@@ -1,4 +1,6 @@
-import { Module, ValidationPipe, OnModuleInit } from '@nestjs/common';
+import fs from 'fs';
+import path from 'path';
+import { Module, ValidationPipe, OnModuleInit, HttpException } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { APP_PIPE, APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { values } from 'lodash';
@@ -12,6 +14,8 @@ import { UsersModule } from './users/users.module';
 import { AuthsModule } from './auths/auths.module';
 import { HttpExceptionFilter } from './commons/filters';
 import * as scalars from './commons/scalars';
+
+const envPath: string = path.resolve(__dirname, `../.env.${process.env.NODE_ENV}`);
 
 @Module({
   imports: [
@@ -29,6 +33,7 @@ import * as scalars from './commons/scalars';
     }),
     ConfigModule.resolveRootPath(__dirname).load('**/!(*.d).config.{ts,js}', {
         modifyConfigName: name => name.replace('.config', ''),
+        path: fs.existsSync(envPath) ? envPath : null,
     }),
   ],
   providers: [
@@ -41,17 +46,22 @@ import * as scalars from './commons/scalars';
       provide: APP_FILTER,
       useClass: HttpExceptionFilter,
     },
-    // {
-    //   provide: APP_INTERCEPTOR,
-    //   useValue: new RavenInterceptor(),
-    // },
+    {
+      provide: APP_INTERCEPTOR,
+      useValue: new RavenInterceptor({
+        filters: [
+          { type: HttpException, filter: (exception: HttpException) => 500 > exception.getStatus() },
+        ],
+      }),
+    },
   ],
 })
 
 export class AppModule implements OnModuleInit {
-  constructor (
+  constructor(
     private readonly configService: ConfigService,
   ) {}
+
   onModuleInit() {
     Sentry.init({
       dsn: this.configService.get('app.sentry.dsn'),

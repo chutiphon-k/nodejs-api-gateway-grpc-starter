@@ -29,25 +29,23 @@ describe('BooksResolver', () => {
     jest.resetAllMocks();
   });
 
-  describe('Query', () => {
-    describe('books', () => {
-      it('should return array of books', async () => {
-        const results: Book[] = [
-          {
-            _id: '1',
-            title: 'Title 1',
-            userId: '1',
-          },
-        ];
+  describe('books', () => {
+    it('should return array of books', async () => {
+      const results: Book[] = [
+        {
+          _id: '1',
+          title: 'Title 1',
+          userId: '1',
+        },
+      ];
 
-        jest.spyOn(booksService, 'getBooks').mockImplementation(() => Promise.resolve(results));
+      jest.spyOn(booksService, 'getBooks').mockImplementation(() => Promise.resolve(results));
 
-        const books: Book[] = await booksResolver.books();
+      const books: Book[] = await booksResolver.books();
 
-        expect(booksService.getBooks).toHaveBeenCalledTimes(1);
-        expect(booksService.getBooks).toHaveBeenCalledWith({});
-        expect(books).toBe(results);
-      });
+      expect(booksService.getBooks).toHaveBeenCalledTimes(1);
+      expect(booksService.getBooks).toHaveBeenCalledWith({});
+      expect(books).toBe(results);
     });
   });
 });

@@ -8,7 +8,7 @@ import { BooksResolver } from './books.resolver';
   imports: [
     HttpModule.registerAsync({
       useFactory: (configService: ConfigService) => ({
-        baseURL: `${configService.get('books.bookServiceUrl')}/books`,
+        baseURL: `${configService.get('app.microservices.bookServiceUrl')}/books`,
       }),
       inject: [ConfigService],
     }),

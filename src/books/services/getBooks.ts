@@ -1,4 +1,3 @@
-import { AxiosResponse } from 'axios';
 import { HttpService } from '@nestjs/common';
 
 import { Book } from '../schemas/types';
@@ -9,6 +8,6 @@ interface IBookServiceInstance {
 }
 
 export async function getBooks(bookServiceInstance: IBookServiceInstance, args: BooksArgs = {}): Promise<Book[]> {
-  const res = await bookServiceInstance.bookRepository.get<{ books: Book[] }>('/', { params: args.filter }).toPromise();
+  const res = await bookServiceInstance.bookRepository.get<{ books: Book[] }>('', { params: args.filter }).toPromise();
   return res.data.books;
 }

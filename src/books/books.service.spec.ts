@@ -44,7 +44,7 @@ describe('BooksService', () => {
       const books: Book[] = await bookService.getBooks();
 
       expect(bookRepository.get).toHaveBeenCalledTimes(1);
-      expect(bookRepository.get).toHaveBeenCalledWith('/', {});
+      expect(bookRepository.get).toHaveBeenCalledWith('', {});
       expect(books).toBe(results);
     });
   });

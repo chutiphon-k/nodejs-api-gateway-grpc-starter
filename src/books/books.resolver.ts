@@ -1,5 +1,5 @@
 import { Resolver, Query, Args } from '@nestjs/graphql';
-import { UseGuards } from '@nestjs/common';
+import { UseGuards, UnauthorizedException } from '@nestjs/common';
 
 import { Book } from './schemas/types';
 import { BooksService } from './books.service';
@@ -13,8 +13,9 @@ export class BooksResolver {
   ) {}
 
   @Query(() => [Book])
-  @UseGuards(AuthGuard)
+  // @UseGuards(AuthGuard)
   async books(@Args() args: BooksArgs = {}): Promise<Book[]> {
+    // throw new UnauthorizedException();
     return this.booksService.getBooks(args);
   }
 }

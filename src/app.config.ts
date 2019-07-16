@@ -1,12 +1,20 @@
 import { RedisModuleOptions } from 'nestjs-redis';
 
-interface IAppConfig {
-  port: number;
-  redis: RedisModuleOptions[];
+interface IConfig {
+  readonly nodeEnv: string;
+  readonly port: number;
+  readonly redis: RedisModuleOptions[];
+  readonly microservices: {
+    [key: string]: string;
+  };
+  readonly sentry?: {
+    dsn: string,
+  };
 }
 
-export default {
-  port: process.env.PORT || 8000,
+const config: IConfig = {
+  nodeEnv: process.env.NODE_ENV,
+  port: +process.env.PORT || 8000,
   redis: [
     {
       name: 'token',
@@ -21,4 +29,9 @@ export default {
   sentry: {
     dsn: process.env.SENTRY_DSN,
   },
-} as IAppConfig;
+  microservices: {
+    bookServiceUrl: process.env.BOOK_SERVICE_URL,
+  },
+};
+
+export default  config;
