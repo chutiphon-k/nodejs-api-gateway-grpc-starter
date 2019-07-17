@@ -5,6 +5,7 @@ import { of } from 'rxjs';
 
 import { BooksService } from './books.service';
 import { Book } from './schemas/types';
+import { IGetMultiBooksArgs } from './interfaces';
 
 describe('BooksService', () => {
   let bookService: BooksService;
@@ -45,7 +46,37 @@ describe('BooksService', () => {
 
       expect(bookRepository.get).toHaveBeenCalledTimes(1);
       expect(bookRepository.get).toHaveBeenCalledWith('', {});
-      expect(books).toBe(results);
+      expect(books).toEqual(results);
+    });
+  });
+
+  describe('Get multi books', () => {
+    it('should return array of books', async () => {
+      const results: Book[] = [
+        {
+          _id: '1',
+          title: 'Title 1',
+          userId: '1',
+        },
+      ];
+
+      const httpStatusCode = HttpStatus.OK;
+      const axiosResponse: AxiosResponse<Book[]> = {
+        data: results,
+        status: httpStatusCode,
+        statusText: HttpStatus[httpStatusCode],
+        headers: {},
+        config: {},
+      };
+
+      jest.spyOn(bookRepository, 'get').mockImplementation(() => of(axiosResponse));
+
+      const args: IGetMultiBooksArgs = { filter: { id: ['1'] } };
+      const books: Book[] = await bookService.getMultiBooks(args);
+
+      expect(bookRepository.get).toHaveBeenCalledTimes(1);
+      expect(bookRepository.get).toHaveBeenCalledWith('/multi', { params: args.filter });
+      expect(books).toEqual(results);
     });
   });
 });

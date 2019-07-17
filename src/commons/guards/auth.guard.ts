@@ -3,7 +3,7 @@ import {
   Injectable,
 } from '@nestjs/common';
 import { AuthGuard as PassportAuthGuard } from '@nestjs/passport';
-import { GqlExecutionContext, GraphQLExecutionContext } from '@nestjs/graphql';
+import { GqlExecutionContext } from '@nestjs/graphql';
 import { Request } from 'express';
 
 @Injectable()

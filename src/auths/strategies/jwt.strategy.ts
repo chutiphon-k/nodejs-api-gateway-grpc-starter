@@ -13,7 +13,7 @@ import { ITokenPayload } from '../interfaces';
 export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
   constructor(
     private readonly authService: AuthsService,
-    private readonly configService: ConfigService,
+    readonly configService: ConfigService,
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('jwt'),

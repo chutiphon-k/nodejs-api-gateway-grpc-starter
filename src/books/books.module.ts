@@ -17,5 +17,6 @@ import { BooksResolver } from './books.resolver';
     BooksResolver,
     BooksService,
   ],
+  exports: [BooksService],
 })
 export class BooksModule {}

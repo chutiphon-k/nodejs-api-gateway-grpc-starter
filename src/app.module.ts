@@ -12,6 +12,7 @@ import * as Sentry from '@sentry/node';
 import { BooksModule } from './books/books.module';
 import { UsersModule } from './users/users.module';
 import { AuthsModule } from './auths/auths.module';
+import { LoadersModule } from './loaders/loaders.module';
 import { HttpExceptionFilter } from './commons/filters';
 import * as scalars from './commons/scalars';
 
@@ -23,6 +24,7 @@ const envPath: string = path.resolve(__dirname, `../.env.${process.env.NODE_ENV}
     UsersModule,
     AuthsModule,
     RavenModule,
+    LoadersModule,
     RedisModule.forRootAsync({
       useFactory: (configService: ConfigService) => configService.get('app.redis'),
       inject: [ConfigService],
@@ -46,14 +48,14 @@ const envPath: string = path.resolve(__dirname, `../.env.${process.env.NODE_ENV}
       provide: APP_FILTER,
       useClass: HttpExceptionFilter,
     },
-    {
-      provide: APP_INTERCEPTOR,
-      useValue: new RavenInterceptor({
-        filters: [
-          { type: HttpException, filter: (exception: HttpException) => 500 > exception.getStatus() },
-        ],
-      }),
-    },
+    // {
+    //   provide: APP_INTERCEPTOR,
+    //   useValue: new RavenInterceptor({
+    //     filters: [
+    //       { type: HttpException, filter: (exception: HttpException) => 500 > exception.getStatus() },
+    //     ],
+    //   }),
+    // },
   ],
 })
 

@@ -10,7 +10,8 @@ import { HttpExceptionFilter } from './commons/filters';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.use(cors(), helmet(), compression());
+  app.enableCors();
+  app.use(helmet(), compression());
   // app.connectMicroservice({
   //   transport: Transport.REDIS,
   //   options: {
