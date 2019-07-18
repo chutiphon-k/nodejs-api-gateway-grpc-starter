@@ -14,6 +14,7 @@ import { UsersModule } from './users/users.module';
 import { AuthsModule } from './auths/auths.module';
 import { LoadersModule } from './loaders/loaders.module';
 import { HttpExceptionFilter } from './commons/filters';
+import { MicroservicesModule } from './microservices/microservices.module';
 import * as scalars from './commons/scalars';
 
 const envPath: string = path.resolve(__dirname, `../.env.${process.env.NODE_ENV}`);
@@ -24,6 +25,7 @@ const envPath: string = path.resolve(__dirname, `../.env.${process.env.NODE_ENV}
     UsersModule,
     AuthsModule,
     RavenModule,
+    MicroservicesModule,
     LoadersModule,
     RedisModule.forRootAsync({
       useFactory: (configService: ConfigService) => configService.get('app.redis'),

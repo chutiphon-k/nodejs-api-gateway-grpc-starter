@@ -1,9 +1,10 @@
-import { Injectable, HttpService } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 
 import { Book } from './schemas/types';
 import { getBooks, getMultiBooks } from './services';
 import { BooksArgs } from './schemas/args';
 import { IGetMultiBooksArgs } from './interfaces';
+import { BooksRepository } from '../microservices/books.repository';
 
 interface IBooksService {
   getBooks(args: BooksArgs): Promise<Book[]>;
@@ -12,10 +13,10 @@ interface IBooksService {
 @Injectable()
 export class BooksService implements IBooksService {
   constructor(
-    private readonly bookRepository: HttpService,
+    private readonly bookRepository: BooksRepository,
   ) {}
 
-  async getBooks(args: BooksArgs = {}): Promise<Book[]> {
+  async getBooks(args: BooksArgs): Promise<Book[]> {
     return getBooks({ bookRepository: this.bookRepository }, args);
   }
 

@@ -5,14 +5,6 @@ import { BooksService } from './books.service';
 import { BooksResolver } from './books.resolver';
 
 @Module({
-  imports: [
-    HttpModule.registerAsync({
-      useFactory: (configService: ConfigService) => ({
-        baseURL: `${configService.get('app.microservices.bookServiceUrl')}/books`,
-      }),
-      inject: [ConfigService],
-    }),
-  ],
   providers: [
     BooksResolver,
     BooksService,

@@ -1,11 +1,11 @@
-import { Module } from '@nestjs/common';
+import { Module, Global } from '@nestjs/common';
 
-import { BooksService } from '../books/books.service';
 import { BooksLoader } from './loaders/books.loader';
 import { BooksModule } from '../books/books.module';
 
+@Global()
 @Module({
-  imports: [BooksModule],
+  // imports: [BooksModule],
   providers: [BooksLoader],
   exports: [BooksLoader],
 })

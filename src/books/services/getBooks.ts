@@ -1,13 +1,12 @@
-import { HttpService } from '@nestjs/common';
-
 import { Book } from '../schemas/types';
 import { BooksArgs } from '../schemas/args';
+import { BooksRepository } from '../../microservices/books.repository';
 
 interface IBookServiceInstance {
-  readonly bookRepository: HttpService;
+  readonly bookRepository: BooksRepository;
 }
 
-export async function getBooks(bookServiceInstance: IBookServiceInstance, args: BooksArgs = {}): Promise<Book[]> {
-  const res = await bookServiceInstance.bookRepository.get<{ books: Book[] }>('', { params: args.filter }).toPromise();
-  return res.data.books;
+export async function getBooks(bookServiceInstance: IBookServiceInstance, args: BooksArgs): Promise<Book[]> {
+  const { books } = await bookServiceInstance.bookRepository.getBooks(args);
+  return books;
 }
