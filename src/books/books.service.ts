@@ -4,7 +4,7 @@ import { Book } from './schemas/types';
 import { getBooks, getMultiBooks } from './services';
 import { BooksArgs } from './schemas/args';
 import { IGetMultiBooksArgs } from './interfaces';
-import { BooksRepository } from '../microservices/books.repository';
+import { BooksRepository } from '../microservices/repositories';
 
 interface IBooksService {
   getBooks(args: BooksArgs): Promise<Book[]>;

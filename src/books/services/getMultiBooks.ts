@@ -1,6 +1,6 @@
 import { Book } from '../schemas/types';
 import { IGetMultiBooksArgs } from '../interfaces';
-import { BooksRepository } from '../../microservices/books.repository';
+import { BooksRepository } from '../../microservices/repositories';
 
 interface IBookServiceInstance {
   readonly bookRepository: BooksRepository;

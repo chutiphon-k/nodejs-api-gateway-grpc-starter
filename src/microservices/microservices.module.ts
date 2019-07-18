@@ -1,12 +1,15 @@
 import { Module, HttpModule, Global } from '@nestjs/common';
+import { values } from 'lodash';
 
-import { BooksRepository } from './books.repository';
+import * as repositories from './repositories';
+
+const classRepositories = values(repositories);
 
 @Global()
 @Module({
   imports: [HttpModule],
-  providers: [BooksRepository],
-  exports: [BooksRepository],
+  providers: [...classRepositories],
+  exports: [...classRepositories],
 })
 
 export class MicroservicesModule {}

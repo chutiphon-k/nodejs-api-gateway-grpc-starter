@@ -2,7 +2,7 @@ import { Injectable, Scope } from '@nestjs/common';
 import DataLoader from 'dataloader';
 
 import { Book } from '../../books/schemas/types';
-import { BooksRepository } from '../../microservices/books.repository';
+import { BooksRepository } from '../../microservices/repositories';
 
 interface IBooksLoader {
   getBook: DataLoader<string, Book>;

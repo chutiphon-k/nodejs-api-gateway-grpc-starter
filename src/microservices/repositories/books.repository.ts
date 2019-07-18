@@ -3,9 +3,9 @@ import { Observable } from 'rxjs';
 import { AxiosResponse, AxiosRequestConfig } from 'axios';
 import { ConfigService } from 'nestjs-config';
 
-import { Book } from '../books/schemas/types';
-import { BooksArgs } from '../books/schemas/args';
-import { IGetMultiBooksArgs } from '../books/interfaces';
+import { Book } from '../../books/schemas/types';
+import { BooksArgs } from '../../books/schemas/args';
+import { IGetMultiBooksArgs } from '../../books/interfaces';
 
 type IRequestFunction = <T = any>(config: IRequestConfig) => Observable<AxiosResponse<T>>;
 
