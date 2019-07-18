@@ -25,4 +25,7 @@ export class Book {
 
   @Field({ nullable: true })
   viewsCount?: number;
+
+  @Field(type => [Book], { nullable: 'itemsAndList' })
+  neighbors?: object;
 }

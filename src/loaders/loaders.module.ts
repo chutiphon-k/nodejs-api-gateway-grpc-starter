@@ -1,13 +1,13 @@
-import { Module, Global } from '@nestjs/common';
+import { Module } from '@nestjs/common';
+import { values } from 'lodash';
 
-import { BooksLoader } from './loaders/books.loader';
-import { BooksModule } from '../books/books.module';
+import * as loaders from './loaders';
 
-@Global()
+const loaderProviders = values(loaders);
+
 @Module({
-  // imports: [BooksModule],
-  providers: [BooksLoader],
-  exports: [BooksLoader],
+  providers: [...loaderProviders],
+  exports: [...loaderProviders],
 })
 
 export class LoadersModule {}

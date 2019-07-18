@@ -1,10 +1,11 @@
-import { Module, HttpModule } from '@nestjs/common';
-import { ConfigService } from 'nestjs-config';
+import { Module } from '@nestjs/common';
 
 import { BooksService } from './books.service';
 import { BooksResolver } from './books.resolver';
+import { LoadersModule } from '../loaders/loaders.module';
 
 @Module({
+  imports: [LoadersModule],
   providers: [
     BooksResolver,
     BooksService,

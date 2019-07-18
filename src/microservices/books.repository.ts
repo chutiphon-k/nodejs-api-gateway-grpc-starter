@@ -68,9 +68,6 @@ export class BooksRepository extends BaseRepository {
       params: args.filter,
     };
     const res = await this.request<Book[]>(config).toPromise();
-    console.log('====================================');
-    console.log('eiei123');
-    console.log('====================================');
     return res.data;
   }
 }
