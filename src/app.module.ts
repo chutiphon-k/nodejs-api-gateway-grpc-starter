@@ -8,6 +8,7 @@ import { RedisModule } from 'nestjs-redis';
 import { ConfigModule, ConfigService } from 'nestjs-config';
 import { RavenModule, RavenInterceptor } from 'nest-raven';
 import * as Sentry from '@sentry/node';
+import { I18nModule } from 'nestjs-i18n';
 
 import { BooksModule } from './books/books.module';
 import { UsersModule } from './users/users.module';
@@ -27,6 +28,11 @@ const envPath: string = path.resolve(__dirname, `../.env.${process.env.NODE_ENV}
     RavenModule,
     MicroservicesModule,
     LoadersModule,
+    I18nModule.forRoot({
+      path: path.resolve(__dirname, './i18n'),
+      filePattern: '*.json',
+      fallbackLanguage: 'th',
+    }),
     RedisModule.forRootAsync({
       useFactory: (configService: ConfigService) => configService.get('app.redis'),
       inject: [ConfigService],

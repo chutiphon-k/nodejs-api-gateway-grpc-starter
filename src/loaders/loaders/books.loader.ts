@@ -3,14 +3,15 @@ import DataLoader from 'dataloader';
 
 import { Book } from '../../books/schemas/types';
 import { BooksRepository } from '../../microservices/repositories';
+import { CustomDataLoader } from '../loaders.util';
 
 interface IBooksLoader {
-  getBook: DataLoader<string, Book>;
+  readonly getBook: DataLoader<string, Book>;
 }
 
 @Injectable({ scope: Scope.REQUEST })
 export class BooksLoader implements IBooksLoader {
-  getBook: DataLoader<string, Book>;
+  readonly getBook: DataLoader<string, Book>;
 
   constructor(
     private readonly booksRepository: BooksRepository,
@@ -19,7 +20,7 @@ export class BooksLoader implements IBooksLoader {
   }
 
   private createGetBook(): DataLoader<string, Book> {
-    return new DataLoader<string, Book>((bookIds: string[]): Promise<Book[]> => {
+    return new CustomDataLoader<string, Book>((bookIds): Promise<Book[]> => {
       return this.booksRepository.getMultiBooks({ filter: { id: bookIds } });
     });
   }
