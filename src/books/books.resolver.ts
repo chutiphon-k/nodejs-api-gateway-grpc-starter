@@ -15,7 +15,7 @@ export class BooksResolver {
   ) {}
 
   @Query(() => [Book], { nullable: 'itemsAndList' })
-  async books(@Args() args: BooksArgs): Promise<Book[]> {
+  async books(@Args() args: BooksArgs = {}): Promise<Book[]> {
     return this.booksService.getBooks(args);
   }
 

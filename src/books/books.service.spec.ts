@@ -1,24 +1,23 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { HttpModule, HttpService, HttpStatus } from '@nestjs/common';
-import { AxiosResponse } from 'axios';
-import { of } from 'rxjs';
 
 import { BooksService } from './books.service';
 import { Book } from './schemas/types';
 import { IGetMultiBooksArgs } from './interfaces';
+import { BooksRepository } from '../microservices/repositories';
+
+jest.mock('../microservices/repositories');
 
 describe('BooksService', () => {
   let bookService: BooksService;
-  let bookRepository: HttpService;
+  let bookRepository: BooksRepository;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [HttpModule],
-      providers: [BooksService],
+      providers: [BooksService, BooksRepository],
     }).compile();
 
     bookService = module.get<BooksService>(BooksService);
-    bookRepository = module.get<HttpService>(HttpService);
+    bookRepository = module.get<BooksRepository>(BooksRepository);
   });
 
   describe('Get books', () => {
@@ -31,21 +30,12 @@ describe('BooksService', () => {
         },
       ];
 
-      const httpStatusCode = HttpStatus.OK;
-      const axiosResponse: AxiosResponse<{ books: Book[] }> = {
-        data: { books: results },
-        status: httpStatusCode,
-        statusText: HttpStatus[httpStatusCode],
-        headers: {},
-        config: {},
-      };
-
-      jest.spyOn(bookRepository, 'get').mockImplementation(() => of(axiosResponse));
+      jest.spyOn(bookRepository, 'getBooks').mockImplementation(() => Promise.resolve({ books: results, next: false }));
 
       const books: Book[] = await bookService.getBooks();
 
-      expect(bookRepository.get).toHaveBeenCalledTimes(1);
-      expect(bookRepository.get).toHaveBeenCalledWith('', {});
+      expect(bookRepository.getBooks).toHaveBeenCalledTimes(1);
+      expect(bookRepository.getBooks).toHaveBeenCalledWith({});
       expect(books).toEqual(results);
     });
   });
@@ -60,22 +50,13 @@ describe('BooksService', () => {
         },
       ];
 
-      const httpStatusCode = HttpStatus.OK;
-      const axiosResponse: AxiosResponse<Book[]> = {
-        data: results,
-        status: httpStatusCode,
-        statusText: HttpStatus[httpStatusCode],
-        headers: {},
-        config: {},
-      };
-
-      jest.spyOn(bookRepository, 'get').mockImplementation(() => of(axiosResponse));
+      jest.spyOn(bookRepository, 'getMultiBooks').mockImplementation(() => Promise.resolve(results));
 
       const args: IGetMultiBooksArgs = { filter: { id: ['1'] } };
       const books: Book[] = await bookService.getMultiBooks(args);
 
-      expect(bookRepository.get).toHaveBeenCalledTimes(1);
-      expect(bookRepository.get).toHaveBeenCalledWith('/multi', { params: args.filter });
+      expect(bookRepository.getMultiBooks).toHaveBeenCalledTimes(1);
+      expect(bookRepository.getMultiBooks).toHaveBeenCalledWith({ filter: args.filter });
       expect(books).toEqual(results);
     });
   });

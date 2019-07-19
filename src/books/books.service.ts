@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 
-import { Book } from './schemas/types';
 import { getBooks, getMultiBooks } from './services';
-import { BooksArgs } from './schemas/args';
 import { IGetMultiBooksArgs } from './interfaces';
+import { Book } from './schemas/types';
+import { BooksArgs } from './schemas/args';
 import { BooksRepository } from '../microservices/repositories';
 
 interface IBooksService {
@@ -16,7 +16,7 @@ export class BooksService implements IBooksService {
     private readonly bookRepository: BooksRepository,
   ) {}
 
-  async getBooks(args: BooksArgs): Promise<Book[]> {
+  async getBooks(args: BooksArgs = {}): Promise<Book[]> {
     return getBooks({ bookRepository: this.bookRepository }, args);
   }
 

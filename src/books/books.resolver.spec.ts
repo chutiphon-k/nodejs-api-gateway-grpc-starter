@@ -4,8 +4,10 @@ import { PassportModule } from '@nestjs/passport';
 import { Book } from './schemas/types';
 import { BooksResolver } from './books.resolver';
 import { BooksService } from './books.service';
+import { BooksLoader } from '../loaders/loaders';
 
 jest.mock('./books.service');
+jest.mock('../loaders/loaders');
 
 describe('BooksResolver', () => {
   let booksResolver: BooksResolver;
@@ -17,6 +19,7 @@ describe('BooksResolver', () => {
       providers: [
         BooksResolver,
         BooksService,
+        BooksLoader,
       ],
     })
     .compile();
@@ -30,7 +33,7 @@ describe('BooksResolver', () => {
   });
 
   describe('books', () => {
-    it('should return array of books', async () => {
+    it('should return array of book', async () => {
       const results: Book[] = [
         {
           _id: '1',
