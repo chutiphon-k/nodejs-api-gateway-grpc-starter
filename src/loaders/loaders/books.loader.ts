@@ -3,7 +3,7 @@ import DataLoader from 'dataloader';
 
 import { Book } from '../../books/schemas/types';
 import { BooksRepository } from '../../microservices/repositories';
-import { CustomDataLoader } from '../loaders.util';
+import { CustomDataLoader } from '../loaders.utils';
 
 interface IBooksLoader {
   readonly getBook: DataLoader<string, Book>;

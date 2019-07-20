@@ -20,7 +20,6 @@ export class BooksRepository extends BaseRepository {
     const config: IRequestConfig = {
       ...args,
       method: 'GET',
-      url: '',
     };
     const res = await this.request<IBookPagination>(config).toPromise();
     return res.data;
