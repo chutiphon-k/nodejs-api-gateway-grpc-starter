@@ -35,6 +35,10 @@ describe('BooksResolver', () => {
     jest.resetAllMocks();
   });
 
+  it('init test', () => {
+    expect(1).toBe(1);
+  });
+
   describe('books', () => {
     it('should return array of book', async () => {
       const results: Book[] = [

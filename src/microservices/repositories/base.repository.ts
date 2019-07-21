@@ -1,28 +1,25 @@
 import { HttpService } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { AxiosResponse } from 'axios';
+import { omit } from 'lodash';
 
 import { IRequestConfig } from '../interfaces';
 
 type IRequestFunction = <T>(config: IRequestConfig) => Observable<AxiosResponse<T>>;
 
 export class BaseRepository {
-  private readonly httpService: HttpService;
-  private readonly baseURL: string;
   protected request: IRequestFunction;
 
   constructor(config: { httpService: HttpService, baseURL: string }) {
-    this.httpService = config.httpService;
-    this.baseURL = config.baseURL;
-    this.request = this.createRequest();
+    this.request = this.createRequest(config);
   }
 
-  private createRequest(): IRequestFunction {
-    return <T>(config: IRequestConfig): Observable<AxiosResponse<T>>  => this.httpService.request<T>({
-      baseURL: this.baseURL,
+  private createRequest(args: { httpService: HttpService, baseURL: string }): IRequestFunction {
+    return <T>(config: IRequestConfig): Observable<AxiosResponse<T>>  => args.httpService.request<T>({
+      baseURL: args.baseURL,
       params: config.filter,
       data: config.input,
-      ...config,
+      ...omit(config, ['filter', 'input']),
     });
   }
 }

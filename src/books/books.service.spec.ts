@@ -20,6 +20,10 @@ describe('BooksService', () => {
     bookRepository = module.get<BooksRepository>(BooksRepository);
   });
 
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
+
   describe('Get books', () => {
     it('should return array of books', async () => {
       const results: Book[] = [
