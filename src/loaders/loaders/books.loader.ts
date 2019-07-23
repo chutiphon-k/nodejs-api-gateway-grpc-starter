@@ -3,7 +3,7 @@ import { chain } from 'lodash';
 
 import { Book } from '../../books/schemas/types';
 import { BooksRepository } from '../../microservices/repositories';
-import { CustomDataLoader } from '../loaders.utils';
+import { CustomDataLoader } from '../custom.dataloader';
 
 interface IBooksLoader {
   readonly getBook: CustomDataLoader<string, Book>;

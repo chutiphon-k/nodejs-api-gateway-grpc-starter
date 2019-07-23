@@ -3,13 +3,17 @@ import { Scope } from '@nestjs/common';
 
 import { BooksLoader } from './books.loader';
 import { BooksRepository } from '../../microservices/repositories';
-import { CustomDataLoader } from '../loaders.utils';
+import { CustomDataLoader } from '../custom.dataloader';
 import { Book } from '../../books/schemas/types';
 import { IGetMultiBooksArgs } from '../../books/interfaces';
 
 jest.mock('../../microservices/repositories');
 
 describe('BooksLoader', () => {
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
+
   describe('override scope to singleton', () => {
     let booksLoader: BooksLoader;
     let booksRepository: BooksRepository;
@@ -29,10 +33,6 @@ describe('BooksLoader', () => {
 
       booksLoader = module.get<BooksLoader>(BooksLoader);
       booksRepository = module.get<BooksRepository>(BooksRepository);
-    });
-
-    afterEach(() => {
-      jest.resetAllMocks();
     });
 
     describe('getBook', () => {
@@ -80,10 +80,6 @@ describe('BooksLoader', () => {
       .compile();
 
       booksLoader = module.get<BooksLoader>(BooksLoader);
-    });
-
-    afterEach(() => {
-      jest.resetAllMocks();
     });
 
     describe('getBook', () => {
