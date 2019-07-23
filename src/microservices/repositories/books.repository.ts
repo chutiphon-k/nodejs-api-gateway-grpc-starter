@@ -1,37 +1,29 @@
 import { Injectable, HttpService } from '@nestjs/common';
-import { ConfigService } from 'nestjs-config';
 
 import { Book } from '../../books/schemas/types';
 import { BooksArgs } from '../../books/schemas/args';
 import { IGetMultiBooksArgs, IBookPagination } from '../../books/interfaces';
-import { BaseRepository } from './base.repository';
-import { IRequestConfig } from '../interfaces';
+import { ClientHttp } from '../client.http';
+import { ServiceName } from '../enums';
+import { requestConfigSerializer } from '../microservices.util';
 
 @Injectable()
-export class BooksRepository extends BaseRepository {
-  constructor(httpService: HttpService, config: ConfigService) {
-    super({
-      httpService,
-      baseURL: `${config.get('app.microservices.bookServiceUrl')}/books`,
-    });
+export class BooksRepository {
+  private readonly bookHttpService: HttpService;
+
+  constructor(
+    client: ClientHttp,
+  ) {
+    this.bookHttpService = client.getService(ServiceName.BookService);
   }
 
   async getBooks(args: BooksArgs = {}): Promise<IBookPagination> {
-    const config: IRequestConfig = {
-      ...args,
-      method: 'GET',
-    };
-    const res = await this.request<IBookPagination>(config).toPromise();
+    const res = await this.bookHttpService.get<IBookPagination>('', requestConfigSerializer(args)).toPromise();
     return res.data;
   }
 
   async getMultiBooks(args: IGetMultiBooksArgs): Promise<Book[]> {
-    const config: IRequestConfig = {
-      ...args,
-      method: 'GET',
-      url: '/multi',
-    };
-    const res = await this.request<Book[]>(config).toPromise();
+    const res = await this.bookHttpService.get<Book[]>('/multi', requestConfigSerializer(args)).toPromise();
     return res.data;
   }
 }

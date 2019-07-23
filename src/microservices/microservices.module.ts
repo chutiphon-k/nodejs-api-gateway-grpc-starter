@@ -1,14 +1,14 @@
-import { Module, HttpModule, Global } from '@nestjs/common';
+import { Module, Global } from '@nestjs/common';
 import { values } from 'lodash';
 
 import * as repositories from './repositories';
+import { ClientHttp } from './client.http';
 
 const classRepositories = values(repositories);
 
 @Global()
 @Module({
-  imports: [HttpModule],
-  providers: [...classRepositories],
+  providers: [...classRepositories, ClientHttp],
   exports: [...classRepositories],
 })
 

@@ -1,10 +1,10 @@
-import { CustomDataLoader } from "./custom.dataloader";
+import { CustomDataLoader } from './custom.dataloader';
 
 describe('CustomDataLoader', () => {
   let customDataLoader: CustomDataLoader<any, any>;
 
   beforeEach(async () => {
-     customDataLoader = new CustomDataLoader(jest.fn());
+     customDataLoader = new CustomDataLoader<any, any>(jest.fn());
   });
 
   describe('cacheKeyFn', () => {

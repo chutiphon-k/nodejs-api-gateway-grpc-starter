@@ -4,9 +4,6 @@ interface IConfig {
   readonly nodeEnv: string;
   readonly port: number;
   readonly redis: RedisModuleOptions[];
-  readonly microservices: {
-    [key: string]: string;
-  };
   readonly sentry?: {
     dsn: string,
   };
@@ -28,9 +25,6 @@ const config: IConfig = {
   ],
   sentry: {
     dsn: process.env.SENTRY_DSN,
-  },
-  microservices: {
-    bookServiceUrl: process.env.BOOK_SERVICE_URL,
   },
 };
 
