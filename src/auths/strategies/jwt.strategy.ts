@@ -5,7 +5,6 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { Request } from 'express';
 import { ConfigService } from 'nestjs-config';
 
-
 import { AuthsService } from '../auths.service';
 import { ITokenPayload } from '../interfaces';
 

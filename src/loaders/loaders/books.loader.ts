@@ -1,17 +1,17 @@
 import { Injectable, Scope } from '@nestjs/common';
-import DataLoader from 'dataloader';
+import { chain } from 'lodash';
 
 import { Book } from '../../books/schemas/types';
 import { BooksRepository } from '../../microservices/repositories';
 import { CustomDataLoader } from '../loaders.utils';
 
 interface IBooksLoader {
-  readonly getBook: DataLoader<string, Book>;
+  readonly getBook: CustomDataLoader<string, Book>;
 }
 
 @Injectable({ scope: Scope.REQUEST })
 export class BooksLoader implements IBooksLoader {
-  readonly getBook: DataLoader<string, Book>;
+  readonly getBook: CustomDataLoader<string, Book>;
 
   constructor(
     private readonly booksRepository: BooksRepository,
@@ -19,9 +19,11 @@ export class BooksLoader implements IBooksLoader {
     this.getBook = this.createGetBook();
   }
 
-  private createGetBook(): DataLoader<string, Book> {
-    return new CustomDataLoader<string, Book>((bookIds): Promise<Book[]> => {
-      return this.booksRepository.getMultiBooks({ filter: { id: bookIds } });
+  private createGetBook(): CustomDataLoader<string, Book> {
+    return new CustomDataLoader<string, Book>(async (ids): Promise<Book[]> => {
+      const books = await this.booksRepository.getMultiBooks({ filter: { id: ids } });
+      const booksSorted = chain(books).keyBy('_id').at(ids).value();
+      return booksSorted;
     });
   }
 }
