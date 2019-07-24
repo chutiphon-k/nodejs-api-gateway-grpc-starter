@@ -5,12 +5,12 @@ import { Book } from '../../books/schemas/types';
 import { BooksRepository } from '../../microservices/repositories';
 import { CustomDataLoader } from '../custom.dataloader';
 
-interface IBooksLoader {
+interface IBookLoadersService {
   readonly getBook: CustomDataLoader<string, Book>;
 }
 
 @Injectable({ scope: Scope.REQUEST })
-export class BooksLoader implements IBooksLoader {
+export class BookLoadersService implements IBookLoadersService {
   readonly getBook: CustomDataLoader<string, Book>;
 
   constructor(

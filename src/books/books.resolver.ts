@@ -5,13 +5,13 @@ import { Book } from './schemas/types';
 import { BooksService } from './books.service';
 import { AuthGuard } from '../commons/guards';
 import { BooksArgs } from './schemas/args';
-import { BooksLoader } from '../loaders/loaders/books.loader';
+import { BookLoadersService } from '../loaders/services';
 
 @Resolver(() => Book)
 export class BooksResolver {
   constructor(
     private readonly booksService: BooksService,
-    private readonly booksLoader: BooksLoader,
+    private readonly bookLoadersService: BookLoadersService,
   ) {}
 
   @Query(() => [Book], { nullable: 'itemsAndList' })
@@ -27,6 +27,6 @@ export class BooksResolver {
 
   @ResolveProperty(() => [Book])
   async neighbors(@Parent() book: Book): Promise<Book[]> {
-    return this.booksLoader.getBook.load(book._id).then(data => data ? [data] : null);
+    return this.bookLoadersService.getBook.load(book._id).then(data => data ? [data] : null);
   }
 }

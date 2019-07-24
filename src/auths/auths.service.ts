@@ -2,23 +2,9 @@ import { Injectable, Inject } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Redis } from 'ioredis';
 
-import { ITokenPayload } from './interfaces';
+import { ITokenPayload, ITokenDetail, IAddToken, IGetTokenDetail } from './interfaces';
 import { REDIS_REPOSITORY } from './auths.constants';
-
-interface ITokenDetail {
-  lastAccessedAt: number;
-  createdAt: number;
-}
-
-interface IGetTokenDetail {
-  userId: string;
-  token: string;
-}
-
-interface IAddToken {
-  userId: string;
-  token: string;
-}
+import { tokenDetailSerializer, tokenDetailDeserializer } from './auths.util';
 
 @Injectable()
 export class AuthsService {
@@ -27,24 +13,16 @@ export class AuthsService {
     @Inject(REDIS_REPOSITORY) private redisRepository: Redis,
   ) {}
 
-  private tokenDetailSerialize(tokenDetail: ITokenDetail): string {
-    return JSON.stringify(tokenDetail);
-  }
-
-  private tokenDetailDeserialize(tokenDetail: string): ITokenDetail {
-    return JSON.parse(tokenDetail);
-  }
-
   async addToken(args: IAddToken): Promise<boolean> {
     const payload: ITokenDetail = { lastAccessedAt: Date.now(), createdAt: Date.now() };
-    const res: number = await this.redisRepository.hset(`{user}:${args.userId}`, `token:${args.token}`, this.tokenDetailSerialize(payload));
+    const res: number = await this.redisRepository.hset(`{user}:${args.userId}`, `token:${args.token}`, tokenDetailSerializer(payload));
     return !!res;
   }
 
   async getTokenDetail(args: IGetTokenDetail): Promise<ITokenDetail> {
     const { userId, token } = args;
     const res: string = await this.redisRepository.hget(`{user}:${userId}`, `token:${token}`);
-    return this.tokenDetailDeserialize(res);
+    return tokenDetailDeserializer(res);
   }
 
   async checkExistToken(args: IGetTokenDetail): Promise<boolean> {
@@ -52,7 +30,7 @@ export class AuthsService {
 
     if (tokenDetail) {
       const tokenDetailUpdated: ITokenDetail = { ...tokenDetail, lastAccessedAt: Date.now() };
-      await this.redisRepository.hset(`{user}:${args.userId}`, `token:${args.token}`, this.tokenDetailSerialize(tokenDetailUpdated));
+      await this.redisRepository.hset(`{user}:${args.userId}`, `token:${args.token}`, tokenDetailSerializer(tokenDetailUpdated));
     }
 
     return !!tokenDetail;

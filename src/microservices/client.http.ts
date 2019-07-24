@@ -16,7 +16,7 @@ export class ClientHttp implements IClientHttp {
 
   getService(serviceName: ServiceName): HttpService {
     const serviceConfig: AxiosRequestConfig = this.config.get(`microservices.services.${serviceName}`);
-    if (!serviceConfig) { throw new Error('service not found'); }
+    if (!serviceConfig) { throw new Error('service_not_found'); }
     return new HttpService(axios.create(serviceConfig));
   }
 }

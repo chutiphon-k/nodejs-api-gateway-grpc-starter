@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { Scope } from '@nestjs/common';
 
-import { BooksLoader } from './books.loader';
+import { BookLoadersService } from './bookloaders.service';
 import { BooksRepository } from '../../microservices/repositories';
 import { CustomDataLoader } from '../custom.dataloader';
 import { Book } from '../../books/schemas/types';
@@ -15,7 +15,7 @@ describe('BooksLoader', () => {
   });
 
   describe('override scope to singleton', () => {
-    let booksLoader: BooksLoader;
+    let bookLoadersService: BookLoadersService;
     let booksRepository: BooksRepository;
 
     beforeEach(async () => {
@@ -23,21 +23,21 @@ describe('BooksLoader', () => {
         providers: [
           BooksRepository,
           {
-            provide: BooksLoader,
-            useClass: BooksLoader,
+            provide: BookLoadersService,
+            useClass: BookLoadersService,
             scope: Scope.DEFAULT,
           },
         ],
       })
       .compile();
 
-      booksLoader = module.get<BooksLoader>(BooksLoader);
+      bookLoadersService = module.get<BookLoadersService>(BookLoadersService);
       booksRepository = module.get<BooksRepository>(BooksRepository);
     });
 
     describe('getBook', () => {
       it('should init', () => {
-        expect(booksLoader.getBook).toBeInstanceOf(CustomDataLoader);
+        expect(bookLoadersService.getBook).toBeInstanceOf(CustomDataLoader);
       });
 
       it ('should return book', async () => {
@@ -56,7 +56,7 @@ describe('BooksLoader', () => {
 
         jest.spyOn(booksRepository, 'getMultiBooks').mockReturnValue(Promise.resolve(resultBooks));
 
-        const [, book2]: Book[] = await Promise.all(resultBookIds.map(bookId => booksLoader.getBook.load(bookId)));
+        const [, book2]: Book[] = await Promise.all(resultBookIds.map(bookId => bookLoadersService.getBook.load(bookId)));
 
         const args: IGetMultiBooksArgs = { filter: { id: resultBookIds } };
 
@@ -68,23 +68,23 @@ describe('BooksLoader', () => {
   });
 
   describe('original', () => {
-    let booksLoader: BooksLoader;
+    let bookLoadersService: BookLoadersService;
 
     beforeEach(async () => {
       const module: TestingModule = await Test.createTestingModule({
         providers: [
           BooksRepository,
-          BooksLoader,
+          BookLoadersService,
         ],
       })
       .compile();
 
-      booksLoader = module.get<BooksLoader>(BooksLoader);
+      bookLoadersService = module.get<BookLoadersService>(BookLoadersService);
     });
 
     describe('getBook', () => {
       it('should not init', () => {
-        expect(booksLoader.getBook).toBeUndefined();
+        expect(bookLoadersService.getBook).toBeUndefined();
       });
     });
   });

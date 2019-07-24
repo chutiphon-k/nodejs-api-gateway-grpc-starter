@@ -13,7 +13,6 @@ import { I18nModule } from 'nestjs-i18n';
 import { BooksModule } from './books/books.module';
 import { UsersModule } from './users/users.module';
 import { AuthsModule } from './auths/auths.module';
-import { LoadersModule } from './loaders/loaders.module';
 import { HttpExceptionFilter } from './commons/filters';
 import { MicroservicesModule } from './microservices/microservices.module';
 import * as scalars from './commons/scalars';
@@ -27,7 +26,6 @@ const envPath: string = path.resolve(__dirname, `../.env.${process.env.NODE_ENV}
     AuthsModule,
     RavenModule,
     MicroservicesModule,
-    LoadersModule,
     I18nModule.forRoot({
       path: path.resolve(__dirname, './i18n'),
       filePattern: '*.json',

@@ -4,13 +4,13 @@ import { PassportModule } from '@nestjs/passport';
 import { Book } from './schemas/types';
 import { BooksResolver } from './books.resolver';
 import { BooksService } from './books.service';
-import { BooksLoader } from '../loaders/loaders';
+import { BookLoadersService } from '../loaders/services';
 
 jest.mock('@nestjs/passport/dist/auth.guard', jest.fn().mockImplementation(() => ({
   AuthGuard: jest.fn().mockReturnValue(jest.fn()),
 })));
 jest.mock('./books.service');
-jest.mock('../loaders/loaders');
+jest.mock('../loaders/services');
 
 describe('BooksResolver', () => {
   let booksResolver: BooksResolver;
@@ -22,7 +22,7 @@ describe('BooksResolver', () => {
       providers: [
         BooksResolver,
         BooksService,
-        BooksLoader,
+        BookLoadersService,
       ],
     })
     .compile();

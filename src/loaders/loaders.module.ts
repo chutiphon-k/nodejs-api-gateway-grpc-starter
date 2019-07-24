@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
 import { values } from 'lodash';
 
-import * as loaders from './loaders';
+import * as loaderServices from './services';
 
-const loaderProviders = values(loaders);
+const loaderServiceProviders = values(loaderServices);
 
 @Module({
-  providers: [...loaderProviders],
-  exports: [...loaderProviders],
+  providers: [...loaderServiceProviders],
+  exports: [...loaderServiceProviders],
 })
 
 export class LoadersModule {}

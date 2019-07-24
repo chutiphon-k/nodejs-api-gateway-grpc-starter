@@ -3,7 +3,7 @@ import { Request } from 'express';
 import { AuthGuard } from '@nestjs/passport';
 
 import { AuthsService } from '../auths/auths.service';
-import { BooksLoader } from '../loaders/loaders/books.loader';
+import { BookLoadersService } from '../loaders/services';
 import { BooksService } from '../books/books.service';
 
 @Controller('users')
