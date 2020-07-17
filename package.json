@@ -43,7 +43,7 @@
     "graphql-input-number": "^0.0.10",
     "graphql-type-json": "^0.3.0",
     "helmet": "^3.18.0",
-    "lodash": "^4.17.14",
+    "lodash": "^4.17.19",
     "nest-raven": "^4.0.0",
     "nestjs-config": "^1.4.2",
     "nestjs-i18n": "^3.0.1",
